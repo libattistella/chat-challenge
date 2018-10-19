@@ -11,7 +11,7 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/mean-chat')
+mongoose.connect('mongodb://localhost/mean-chat', { useNewUrlParser: true })
   .then(() =>  console.log('connection successful'))
   .catch((err) => console.error(err));
 
