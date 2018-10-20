@@ -2,18 +2,28 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
+import { ChannelService } from '../channel/channel.service';
+import { AuthService } from '../auth/auth.service';
+import { Page404Component } from './page404/page404.component';
+import { AppRoutingModule } from '../app-routing.module';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    AppRoutingModule
   ],
   declarations: [
     HomeComponent,
-    HeaderComponent
+    HeaderComponent,
+    Page404Component
   ],
   exports: [
-    HomeComponent,
+    Page404Component,
     HeaderComponent
+  ],
+  providers: [
+    ChannelService,
+    AuthService
   ]
 })
 export class CoreModule { }

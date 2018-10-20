@@ -6,17 +6,21 @@ import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { ChannelComponent } from './channel/channel.component';
+import { ChannelModule } from './channel/channel.module';
+import { ChannelListComponent } from './channel-list/channel-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ChannelComponent
+    ChannelComponent,
+    ChannelListComponent
   ],
   imports: [
     BrowserModule,
     CoreModule,
     AppRoutingModule,
-    AuthModule
+    AuthModule,
+    ChannelModule
   ],
   providers: [],
   bootstrap: [AppComponent]
