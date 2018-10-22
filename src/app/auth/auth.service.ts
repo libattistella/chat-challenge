@@ -10,4 +10,12 @@ export class AuthService {
   public isAuthenticated(): boolean {
     return true;
   }
+
+  signup(email: string, password: string) {
+
+  }
+
+  signin(email: string, password: string) {
+
+  }
 }
