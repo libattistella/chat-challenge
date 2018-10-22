@@ -7,18 +7,24 @@ import { AuthModule } from './auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { ChannelModule } from './channel/channel.module';
 import { ChannelListComponent } from './channel-list/channel-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from './shared/shared.module';
+import { ChannelItemComponent } from './channel-list/channel-item/channel-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ChannelListComponent
+    ChannelListComponent,
+    ChannelItemComponent
   ],
   imports: [
     BrowserModule,
     CoreModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     AuthModule,
-    ChannelModule
+    ChannelModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

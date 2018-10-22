@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Channel } from '../channel/channel.model';
 
 @Component({
   selector: 'app-channel-list',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChannelListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router,
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
+
+  }
+
+  onSelectChannel() {
+    // this.router.navigate(['/channel', channel._id]);
   }
 
 }
