@@ -19,7 +19,8 @@ import { AppRoutingModule } from '../app-routing.module';
   ],
   exports: [
     Page404Component,
-    HeaderComponent
+    HeaderComponent,
+    AppRoutingModule
   ],
   providers: [
     ChannelService,

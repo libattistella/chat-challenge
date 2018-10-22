@@ -6,12 +6,17 @@ import { ChannelComponent } from './channel/channel.component';
 import { Page404Component } from './core/page404/page404.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { ChannelListComponent } from './channel-list/channel-list.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import { SignInComponent } from './auth/sign-in/sign-in.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'channels', component: ChannelListComponent, canLoad: [AuthGuardService] },
-  { path: 'channel/:id', component: ChannelComponent, canLoad: [AuthGuardService] },
-  { path: '**', component: Page404Component }
+  { path: 'signup', component: SignUpComponent },
+  { path: 'signin', component: SignInComponent },
+  { path: 'channels', component: ChannelListComponent, canActivate: [AuthGuardService] },
+  { path: 'channel/:id', component: ChannelComponent, canActivate: [AuthGuardService] },
+  { path: 'not-found', component: Page404Component },
+  { path: '**', redirectTo: '/not-found' }
 ];
 
 @NgModule({
