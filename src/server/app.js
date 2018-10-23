@@ -7,11 +7,23 @@ var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var channelsRouter = require('./routes/channels');
+var chatsRouter = require('./routes/chats');
 
 var app = express();
 
+const options = {
+  autoIndex: false, // Don't build indexes
+  reconnectTries: 100, // Never stop trying to reconnect
+  reconnectInterval: 500, // Reconnect every 500ms
+  poolSize: 10, // Maintain up to 10 socket connections
+  // If not connected, return errors immediately rather than waiting for reconnect
+  bufferMaxEntries: 0,
+  useNewUrlParser: true
+};
+
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://admin123:admin123@ds139243.mlab.com:39243/chat-challenge', { useNewUrlParser: true })
+mongoose.connect('mongodb://admin123:admin123@ds139243.mlab.com:39243/chat-challenge', options)
   .then(() =>  console.log('connection successful'))
   .catch((err) => console.error(err));
 
@@ -27,6 +39,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/channels', channelsRouter);
+app.use('/chats', chatsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
