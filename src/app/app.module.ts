@@ -10,6 +10,8 @@ import { ChannelListComponent } from './channel-list/channel-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { ChannelItemComponent } from './channel-list/channel-item/channel-item.component';
+import { ChannelService } from './channel/channel.service';
+import { SharedService } from './shared/shared.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,10 @@ import { ChannelItemComponent } from './channel-list/channel-item/channel-item.c
     ChannelModule,
     SharedModule
   ],
-  providers: [],
+  providers: [
+    ChannelService,
+    SharedService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
