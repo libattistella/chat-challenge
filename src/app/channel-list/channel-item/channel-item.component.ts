@@ -16,4 +16,8 @@ export class ChannelItemComponent implements OnInit {
   ngOnInit() {
   }
 
+  onConnect() {
+    //
+  }
+
 }

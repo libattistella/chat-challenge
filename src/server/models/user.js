@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var UserSchema = new mongoose.Schema({
   nickname: { type: String, unique: true, required: true },
+  password: { type: String, required: true },
   connected_at: { type: mongoose.Schema.Types.ObjectId, ref: 'channel' }
 });
 
