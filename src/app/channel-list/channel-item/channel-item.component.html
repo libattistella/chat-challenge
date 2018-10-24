@@ -4,6 +4,7 @@
   <div class="pull-left">
     <h4 class="list-group-item-heading">{{ channelItem.name }}</h4>
     <p class="list-group-item-text">Connected users: {{ channelItem.connectedUsers.length }}</p>
+    <button type="button" class="btn btn-outline-success btn-sm" (click)="onConnect()">Connect</button>
   </div>
   <span class="pull-right">
     <img src="https://cdn2.iconfinder.com/data/icons/ios7-inspired-mac-icon-set/1024/messages_5122x.png"

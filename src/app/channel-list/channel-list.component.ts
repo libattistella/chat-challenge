@@ -40,9 +40,4 @@ export class ChannelListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.channelsChanged.unsubscribe();
   }
-
-  onSelectChannel() {
-    // this.router.navigate(['/channel', channel._id]);
-  }
-
 }
