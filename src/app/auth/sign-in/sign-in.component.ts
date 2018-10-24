@@ -20,7 +20,7 @@ export class SignInComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
     this.authSvc.signin(email, password);
-    this.router.navigate(['channels']);
+    this.router.navigate(['channel']);
   }
 
 }

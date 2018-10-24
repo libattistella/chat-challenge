@@ -13,12 +13,12 @@ var chatsRouter = require('./routes/chats');
 var app = express();
 
 const options = {
-  autoIndex: false, // Don't build indexes
-  reconnectTries: 100, // Never stop trying to reconnect
-  reconnectInterval: 500, // Reconnect every 500ms
-  poolSize: 10, // Maintain up to 10 socket connections
-  // If not connected, return errors immediately rather than waiting for reconnect
-  bufferMaxEntries: 0,
+  // autoIndex: false, // Don't build indexes
+  // reconnectTries: 100, // Never stop trying to reconnect
+  // reconnectInterval: 500, // Reconnect every 500ms
+  // poolSize: 10, // Maintain up to 10 socket connections
+  // // If not connected, return errors immediately rather than waiting for reconnect
+  // bufferMaxEntries: 0,
   useNewUrlParser: true
 };
 
@@ -37,10 +37,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/channels', channelsRouter);
-app.use('/chats', chatsRouter);
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+app.use('/api/', indexRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/channels', channelsRouter);
+app.use('/api/chats', chatsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

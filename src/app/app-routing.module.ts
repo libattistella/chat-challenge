@@ -13,7 +13,7 @@ const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'signin', component: SignInComponent },
-  { path: 'channels', component: ChannelListComponent, canActivate: [AuthGuardService] },
+  { path: 'channel', component: ChannelListComponent, canActivate: [AuthGuardService] },
   { path: 'channel/:id', component: ChannelComponent, canActivate: [AuthGuardService] },
   { path: 'not-found', component: Page404Component },
   { path: '**', redirectTo: '/not-found' }

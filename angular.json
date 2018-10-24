@@ -51,7 +51,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "chat-challenge:build"
+            "browserTarget": "chat-challenge:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {

@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class ChannelListComponent implements OnInit, OnDestroy {
 
-  private channels: Channel[];
+  private channels: Channel[] = [];
   private channelsChanged: Subscription;
 
   constructor(private router: Router,
@@ -21,12 +21,20 @@ export class ChannelListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.channelsChanged = this.channelSvc.getChannelsChanged().subscribe((channels: Channel[]) => {
       this.channels = channels;
+      console.log('Channels', this.channels);
     },
     (err) => {
       console.log('Error', err);
     });
 
-    this.channelSvc.getChannels();
+    this.channelSvc.getChannels().subscribe((channels) => {
+      console.log('Channelssssssssss', channels );
+      // this.channels = channels;
+      (<any>Object).assign(this.channels, channels);
+    },
+    (err) => {
+      console.log('Error', err);
+    });
   }
 
   ngOnDestroy() {

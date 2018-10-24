@@ -12,6 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { ChannelItemComponent } from './channel-list/channel-item/channel-item.component';
 import { ChannelService } from './channel/channel.service';
 import { SharedService } from './shared/shared.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SharedService } from './shared/shared.service';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     CoreModule,
     ReactiveFormsModule,
     AppRoutingModule,

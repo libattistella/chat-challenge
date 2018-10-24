@@ -7,12 +7,15 @@ var channelModel = require('../models/channel');
  * Get Channels
  */
 router.get('/', function(req, res, next) {
+  console.log("Llega al get");
   channelModel.find({}, function(err, doc) {
     if(err) {
+      console.log(err);
       res.send(err);
       return;
     }
-    res.json(doc);
+    console.log(doc);
+    res.send(doc);
   });
 });
 
