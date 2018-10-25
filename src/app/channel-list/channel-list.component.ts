@@ -21,19 +21,17 @@ export class ChannelListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.channelsChanged = this.channelSvc.getChannelsChanged().subscribe((channels: Channel[]) => {
       this.channels = channels;
-      console.log('Channels', this.channels);
     },
     (err) => {
-      console.log('Error', err);
+      console.log(err);
     });
 
     this.channelSvc.getChannels().subscribe((channels) => {
-      console.log('Channelssssssssss', channels );
       // this.channels = channels;
       (<any>Object).assign(this.channels, channels);
     },
     (err) => {
-      console.log('Error', err);
+      console.log(err);
     });
   }
 

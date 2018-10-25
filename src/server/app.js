@@ -4,8 +4,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+var passport = require('passport');
+var jwt = require('express-jwt');
 
-var indexRouter = require('./routes/index');
+require('./models/user');
+require('./config/passport');
+
+//var indexRouter = require('./routes/index');
+var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
 var channelsRouter = require('./routes/channels');
 var chatsRouter = require('./routes/chats');
@@ -13,12 +19,6 @@ var chatsRouter = require('./routes/chats');
 var app = express();
 
 const options = {
-  // autoIndex: false, // Don't build indexes
-  // reconnectTries: 100, // Never stop trying to reconnect
-  // reconnectInterval: 500, // Reconnect every 500ms
-  // poolSize: 10, // Maintain up to 10 socket connections
-  // // If not connected, return errors immediately rather than waiting for reconnect
-  // bufferMaxEntries: 0,
   useNewUrlParser: true
 };
 
@@ -43,10 +43,18 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use('/api/', indexRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/channels', channelsRouter);
-app.use('/api/chats', chatsRouter);
+app.use(passport.initialize());
+
+var auth = jwt({
+  secret: 'chatchallenge',
+  userProperty: 'payload'
+});
+
+//app.use('/api/', indexRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/users', auth, usersRouter);
+app.use('/api/channels', auth, channelsRouter);
+app.use('/api/chats', auth, chatsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

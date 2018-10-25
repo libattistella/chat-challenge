@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Headers } from '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({

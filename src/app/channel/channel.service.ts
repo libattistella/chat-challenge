@@ -6,6 +6,7 @@ import { throwError } from 'rxjs';
 import { Observable, Subject } from 'rxjs';
 import { Channel } from './channel.model';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +20,16 @@ export class ChannelService {
   private channelsChanged = new Subject<Channel[]>();
 
   constructor(private sharedSvc: SharedService,
-              private http: HttpClient) { }
+              private http: HttpClient,
+              private authSvc: AuthService) { }
 
   getChannels() {
 
-    // const token = this.authSvc.getToken();
-    const headers = this.sharedSvc.getHeadersJSON();
+    const token = this.authSvc.getToken();
+    // const headers = this.sharedSvc.getHeadersJSON();
     // headers.append('Authorization', `Bearer ${token}`);
 
-    return this.http.get('http://localhost:3000/api/channels', { headers: headers }).pipe(map(
+    return this.http.get('/api/channels', { headers: { Authorization: `Bearer ${token}` }}).pipe(map(
       (response) => {
         // if (response && response.status === 200 && response.json()) {
         //   this.channels = response.json();
