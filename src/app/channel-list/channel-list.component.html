@@ -4,7 +4,7 @@
       <h3>Please select a channel:</h3>
       <hr>
       <app-channel-item *ngFor="let channel of channels, let i = index"
-                        [channelItem] = "channel"
+                        [channelItem]="channel"
                         [index]="i"></app-channel-item>
     </div>
   </div>

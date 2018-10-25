@@ -1,6 +1,5 @@
-import { Channel } from '../channel.model';
-
 export interface User {
+  _id: String;
   nickname: String;
-  channel: Channel;
+  connected_at: String;
 }

@@ -19,16 +19,18 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:channel', function(req, res, next) {
-  console.log('PARAMS', params);
-  channelModel.findById(req.params).populate('connectedUsers', 'chats').exec(function(err, doc) {
-    if(err) {
-      console.log(err);
-      res.send(err);
-      return;
-    }
-    console.log(doc);
-    res.send(doc);
-  });
+  console.log('PARAMS', req.params.channel);
+  channelModel.findById(req.params.channel)
+    .populate({ path: 'connectedUsers', select: 'nickname connected_at' })
+    .populate('chats').exec(function(err, doc) {
+      if(err) {
+        console.log(err);
+        res.send(err);
+        return;
+      }
+      console.log("Populated doc:", doc);
+      res.send(doc);
+    });
 });
 
 router.post('/connect', function(req, res, next) {

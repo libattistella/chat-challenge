@@ -14,7 +14,12 @@ import { Channel } from './channel.model';
 })
 export class ChannelComponent implements OnInit, OnDestroy {
 
-  private channel: Channel;
+  private channel: Channel = {
+    _id: '',
+    name: '',
+    connectedUsers: [],
+    chats: []
+  };
   private chats: Chat[];
   private connectedUsers: User[];
   private querySub: Subscription;
@@ -26,17 +31,14 @@ export class ChannelComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.querySub = this.route.queryParams.subscribe(
-      (params: Channel) => {
-        this.channel = params;
+      (param) => {
+        this.channelSvc.getChannel(param['channel_id']).subscribe((channel) => {
+          (<any>Object).assign(this.channel, channel);
+        },
+        (err) => {
+          console.log(err);
+        });
       });
-
-    this.channelSvc.getChannel().subscribe((channel) => {
-      // this.channels = channels;
-      // (<any>Object).assign(this.chats, channel.chats);
-    },
-    (err) => {
-      console.log(err);
-    });
 
     this.location.onPopState(() => {
       this.onDisconnect();

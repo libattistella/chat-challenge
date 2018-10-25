@@ -41,14 +41,13 @@ export class ChannelService {
     return this.channelsChanged;
   }
 
-  getChannel() {
+  getChannel(channel: String) {
 
+    console.log('Channel ID:', channel);
     const token = this.authSvc.getToken();
-    // const headers = this.sharedSvc.getHeadersJSON();
-    // headers.append('Authorization', `Bearer ${token}`);
-
-    return this.http.get('/api/channels', { headers: { Authorization: `Bearer ${token}` }}).pipe(map(
+    return this.http.get('/api/channels/' + channel, { headers: { Authorization: `Bearer ${token}` }}).pipe(map(
       (response) => {
+        console.log('Channel:', response);
         return response;
       },
       (err) => {

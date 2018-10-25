@@ -1,3 +1,12 @@
-<p>
-  user-item works!
-</p>
+<a style="cursor: pointer;" class="list-group-item clearfix">
+  <div class="pull-left">
+    <h5>{{ user.nickname }}</h5>
+    <p><small>Last message: 00:00</small></p>
+  </div>
+  <span class="pull-right">
+    <img src="https://cdn2.iconfinder.com/data/icons/ios7-inspired-mac-icon-set/1024/messages_5122x.png"
+          alt="{{ user.nickname }}"
+          class="img-responsive"
+          style="max-height: 50px;">
+  </span>
+</a>
