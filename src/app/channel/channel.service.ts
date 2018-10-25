@@ -78,4 +78,22 @@ export class ChannelService {
           return throwError(err);
         }));
   }
+
+  disconnectUserFromChannel(channel: Channel) {
+
+    const token = this.authSvc.getToken();
+    return this.http.post('/api/channels/disconnect', channel, { headers: { Authorization: `Bearer ${token}` }}).pipe(map(
+      (response) => {
+        console.log(response);
+        return response;
+      },
+      (err) => {
+        console.log('err', err);
+        return err;
+      }), catchError(
+        (err) => {
+          console.log('catch', err);
+          return throwError(err);
+        }));
+  }
 }

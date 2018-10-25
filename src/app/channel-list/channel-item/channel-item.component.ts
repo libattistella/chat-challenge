@@ -24,7 +24,7 @@ export class ChannelItemComponent implements OnInit {
     // Add this user to the connected users of this channel
     this.channelSvc.connectUserToChannel(this.channelItem).subscribe((res) => {
       console.log(res);
-      this.router.navigate([this.index], { relativeTo: this.route });
+      this.router.navigate([this.index], { relativeTo: this.route, queryParams: this.channelItem });
     },
     (err) => {
       console.log(err);
