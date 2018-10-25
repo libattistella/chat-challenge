@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TokenPayload } from '../auth.model';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,17 +11,23 @@ import { Router } from '@angular/router';
 })
 export class SignInComponent implements OnInit {
 
+  private credentials: TokenPayload = {
+    nickname: '',
+    password: ''
+  };
+
   constructor(private authSvc: AuthService,
               private router: Router) { }
 
   ngOnInit() {
   }
 
-  onSignin(form: NgForm) {
-    const email = form.value.email;
-    const password = form.value.password;
-    this.authSvc.signin(email, password);
-    this.router.navigate(['channel']);
+  onSignin() {
+    this.authSvc.login(this.credentials).subscribe(() => {
+      this.router.navigate(['channel']);
+    }, (err) => {
+      console.error(err);
+    });
   }
 
 }

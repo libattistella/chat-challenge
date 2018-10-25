@@ -6,19 +6,19 @@ var userModel = require('../models/user');
 /**
  * Get users
  */
-router.get('/users', function(req, res, next) {
+router.get('/', function(req, res, next) {
   userModel.find({}, function(err, doc) {
     if(err) {
-      console.log('ERR', err);
+      console.log(err);
       res.send(err);
       return;
     }
-    console.log('RES', doc);
+    console.log(doc);
     res.json(doc);
   });
 });
 
-router.get('/users/:channel', function(req, res, next) {
+router.get('/:user', function(req, res, next) {
   res.send('respond with a resource');
 });
 

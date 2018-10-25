@@ -5,6 +5,6 @@ var ChatSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
   message: { type: String },
   updated_at: { type: Date, default: Date.now }
-});
+}, { collection: 'chat' });
 
 module.exports = mongoose.model('Chat', ChatSchema);
