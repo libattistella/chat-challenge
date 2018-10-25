@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ChatComponent } from './chat/chat.component';
 import { UsersComponent } from './users/users.component';
 import { ChannelComponent } from './channel.component';
+import { UserItemComponent } from './users/user-item/user-item.component';
 
 @NgModule({
   imports: [
@@ -11,7 +12,8 @@ import { ChannelComponent } from './channel.component';
   declarations: [
     ChannelComponent,
     ChatComponent,
-    UsersComponent
+    UsersComponent,
+    UserItemComponent
   ]
 })
 export class ChannelModule { }

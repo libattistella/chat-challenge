@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var channelModel = require('../models/channel');
+var userModel = require('../models/user');
 
 /**
  * Get Channels
@@ -18,7 +19,39 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:channel', function(req, res, next) {
-  res.send('respond with a resource');
+  console.log('PARAMS', params);
+  channelModel.findById(req.params).populate('connectedUsers', 'chats').exec(function(err, doc) {
+    if(err) {
+      console.log(err);
+      res.send(err);
+      return;
+    }
+    console.log(doc);
+    res.send(doc);
+  });
+});
+
+router.post('/connect', function(req, res, next) {
+
+  console.log('Connect user to channel:');
+  console.log('Channel:', req.body);
+  console.log('User:', req.payload);
+  userModel.findByIdAndUpdate(req.payload._id, { $set: { connected_at: req.body._id }}, { new: true }, function(err, doc) {
+    if(err) { 
+      console.log(err);
+      res.send(err);
+      return;
+    }
+    channelModel.findByIdAndUpdate(req.body._id, {$push: { connectedUsers: req.payload._id }}, { new: true }, function(err, doc) {
+      if(err) { 
+        console.log(err);
+        res.send(err);
+        return;
+      }
+      console.log(doc);
+      res.send(doc);
+    });
+  });
 });
 
 module.exports = router;

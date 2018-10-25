@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SharedService } from '../shared/shared.service';
-
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Observable, Subject } from 'rxjs';
@@ -19,22 +17,14 @@ export class ChannelService {
 
   private channelsChanged = new Subject<Channel[]>();
 
-  constructor(private sharedSvc: SharedService,
-              private http: HttpClient,
+  constructor(private http: HttpClient,
               private authSvc: AuthService) { }
 
   getChannels() {
 
     const token = this.authSvc.getToken();
-    // const headers = this.sharedSvc.getHeadersJSON();
-    // headers.append('Authorization', `Bearer ${token}`);
-
     return this.http.get('/api/channels', { headers: { Authorization: `Bearer ${token}` }}).pipe(map(
       (response) => {
-        // if (response && response.status === 200 && response.json()) {
-        //   this.channels = response.json();
-        //   this.channelsChanged.next(this.channels.slice());
-        // }
         return response;
       },
       (err) => {
@@ -47,7 +37,45 @@ export class ChannelService {
         }));
   }
 
-  public getChannelsChanged() {
+  getChannelsChanged() {
     return this.channelsChanged;
+  }
+
+  getChannel() {
+
+    const token = this.authSvc.getToken();
+    // const headers = this.sharedSvc.getHeadersJSON();
+    // headers.append('Authorization', `Bearer ${token}`);
+
+    return this.http.get('/api/channels', { headers: { Authorization: `Bearer ${token}` }}).pipe(map(
+      (response) => {
+        return response;
+      },
+      (err) => {
+        console.log('err', err);
+        return err;
+      }), catchError(
+        (err) => {
+          console.log('catch', err);
+          return throwError(err);
+        }));
+  }
+
+  connectUserToChannel(channel: Channel) {
+
+    const token = this.authSvc.getToken();
+    return this.http.post('/api/channels/connect', channel, { headers: { Authorization: `Bearer ${token}` }}).pipe(map(
+      (response) => {
+        console.log(response);
+        return response;
+      },
+      (err) => {
+        console.log('err', err);
+        return err;
+      }), catchError(
+        (err) => {
+          console.log('catch', err);
+          return throwError(err);
+        }));
   }
 }
