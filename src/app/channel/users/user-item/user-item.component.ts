@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from '../user.model';
+import { UserDetails } from '../../../auth/auth.model';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-user-item',
@@ -9,10 +11,12 @@ import { User } from '../user.model';
 export class UserItemComponent implements OnInit {
 
   @Input() user: User;
+  private userDetails: UserDetails;
 
-  constructor() { }
+  constructor(private authSvc: AuthService) { }
 
   ngOnInit() {
+    this.userDetails = this.authSvc.getUserDetails();
   }
 
 }

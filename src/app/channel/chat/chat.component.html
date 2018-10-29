@@ -1,4 +1,4 @@
-<div class="panel panel-primary">
+<div class="panel panel-default">
   <div class="panel-heading">
     <span class="glyphicon glyphicon-comment"></span> 
     {{ channelName }}
@@ -6,10 +6,7 @@
   <div #scrollChat class="panel-body">
     <ul class="chat">
       <li *ngFor="let chat of chats">
-        <div class="left clearfix" *ngIf="chat?.user._id === user._id">
-          <span class="chat-img pull-left">
-            <img src="http://placehold.it/50/55C1E7/fff&text=ME" alt="User Avatar" class="img-circle" />
-          </span>
+        <div class="left list-group-item list-group-item-success clearfix" *ngIf="chat?.user._id === user._id">
           <div class="chat-body clearfix">
             <div class="header">
               <strong class="primary-font">{{ chat?.user.nickname }}</strong> 
@@ -20,16 +17,15 @@
             <p>{{ chat?.message }}</p>
           </div>
         </div>
-        <div class="right clearfix" *ngIf="chat?.user._id !== user._id">
-          <span class="chat-img pull-right">
-            <img src="http://placehold.it/50/FA6F57/fff&text=U" alt="User Avatar" class="img-circle" />
-          </span>
+        <div class="right list-group-item list-group-item-info clearfix" *ngIf="chat?.user._id !== user._id">
           <div class="chat-body clearfix">
             <div class="header">
-              <small class="text-muted"><span class="glyphicon glyphicon-time"></span>{{ chat?.created_at | date: 'medium' }}</small>
+              <small class="text-muted">
+                <span class="glyphicon glyphicon-time"></span>{{ chat?.created_at | date: 'medium' }}
+              </small>
               <strong class="pull-right primary-font">{{ chat?.user.nickname }}</strong>
             </div>
-            <p>{{ chat?.message }}</p>
+            <p class="pull-right">{{ chat?.message }}</p>
           </div>
         </div>
       </li>

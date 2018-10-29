@@ -1,23 +1,16 @@
-<div class="outer">
-  <div class="middle">
-    <div class="inner">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-4 col-sm-offset-4">
-            <div  class="text-center">
-              <button type="button" class="btn btn-primary btn-block" [routerLink]="['/signin']">Sign In</button>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-sm-4 col-sm-offset-4">
-            <div  class="text-center">
-              <button type="button" class="btn btn-success btn-block" [routerLink]="['/signup']">Sign Up</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="row text-center">
+  <div class="col-md-8 col-md-offset-2">
+    <h1>Welcome to Chat Challenge!</h1>
   </div>
+</div>
+<br>
+<div class="row text-center">
+  <div class="col-md-4"></div>
+  <div class="col-md-2">
+    <button type="button" class="btn btn-primary btn-block" [routerLink]="['/signin']">Sign In</button>
+  </div>
+  <div class="col-md-2">
+    <button type="button" class="btn btn-success btn-block" [routerLink]="['/signup']">Sign Up</button>
+  </div>
+  <div class="col-md-4"></div>
 </div>
