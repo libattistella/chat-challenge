@@ -9,9 +9,9 @@ var channelModel = require('../models/channel');
 router.get('/:channel', function(req, res, next) {
 
   chatModel.find({ channel: req.params.channel })
-    .sort({ created_at: 1 })
+    .sort({ created_at: -1 })
     .limit(10)
-    .populate({ path: 'user', select: 'nickname' })
+    .populate({ path: 'user', select: '_id nickname' })
     .exec(function(err, doc) {
       if(err) {
         console.log(err);
@@ -32,14 +32,22 @@ router.post('/new', function(req, res, next) {
       console.log(err);
       res.send(err);
     }
-
-    channelModel.findByIdAndUpdate(chat.channel, {$push: { chats: chat._id }}, { new: true }, function(err, doc) {
+    channelModel.findByIdAndUpdate(chat.channel, {$push: { chats: chat._id }}, { new: true }, function(err, channel) {
       if(err) { 
         console.log(err);
         res.send(err);
         return;
       }
-      res.send(chat);
+      chatModel.findById(chat._id)
+        .populate({ path: 'user', select: '_id nickname' })
+        .exec(function(err, doc) {
+          if(err) {
+            console.log(err);
+            res.send(err);
+            return;
+          }
+          res.send(doc);
+        });
     });
   });
 });

@@ -37,8 +37,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     this.channelSvc.getChatsByChannel(this.channelId).subscribe((chats) => {
       (<any>Object).assign(this.reversed, chats);
-      (<any>Object).assign(this.chats, chats);
-      // (<any>Object).assign(this.chats, this.reversed.reverse());
+      (<any>Object).assign(this.chats, this.reversed.reverse());
       console.log('Chats for this channel', this.chats);
       this.scrollToBottom();
     },
