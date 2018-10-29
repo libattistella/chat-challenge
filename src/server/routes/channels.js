@@ -7,6 +7,7 @@ var userModel = require('../models/user');
  * Get Channels
  */
 router.get('/', function(req, res, next) {
+
   channelModel.find({}, function(err, doc) {
     if(err) {
       console.log(err);
@@ -19,25 +20,22 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:channel', function(req, res, next) {
-  console.log('PARAMS', req.params.channel);
+
   channelModel.findById(req.params.channel)
     .populate({ path: 'connectedUsers', select: 'nickname connected_at' })
-    .populate('chats').exec(function(err, doc) {
+    // .populate('chats')
+    .exec(function(err, doc) {
       if(err) {
         console.log(err);
         res.send(err);
         return;
       }
-      console.log("Populated doc:", doc);
       res.send(doc);
     });
 });
 
 router.post('/connect', function(req, res, next) {
 
-  console.log('Connect user to channel:');
-  console.log('Channel:', req.body);
-  console.log('User:', req.payload);
   userModel.findByIdAndUpdate(req.payload._id, { $set: { connected_at: req.body._id }}, { new: true }, function(err, doc) {
     if(err) { 
       console.log(err);
@@ -50,7 +48,6 @@ router.post('/connect', function(req, res, next) {
         res.send(err);
         return;
       }
-      console.log(doc);
       res.send(doc);
     });
   });
@@ -58,9 +55,6 @@ router.post('/connect', function(req, res, next) {
 
 router.post('/disconnect', function(req, res, next) {
 
-  console.log('Disconnect user of channel:');
-  console.log('Channel:', req.body);
-  console.log('User:', req.payload);
   userModel.findByIdAndUpdate(req.payload._id, { $set: { connected_at: null }}, { new: true }, function(err, doc) {
     if(err) { 
       console.log(err);
@@ -73,7 +67,6 @@ router.post('/disconnect', function(req, res, next) {
         res.send(err);
         return;
       }
-      console.log(doc);
       res.send(doc);
     });
   });

@@ -10,7 +10,11 @@
         </div>
       </div>
       <hr>
-      <app-chat [chats]="channel.chats"></app-chat>
+      <!-- <app-chat [chats]="channel.chats"
+                [channelId]="channelId"
+                [channelName]="channel.name"></app-chat> -->
+      <app-chat [channelId]="channelId"
+                [channelName]="channel.name"></app-chat>
     </div>
     <div class="col-md-3">
       <div class="row">

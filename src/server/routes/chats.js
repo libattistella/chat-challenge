@@ -1,44 +1,46 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
-var app = express();
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
-var Chat = require('../models/chat.js');
-
-server.listen(4000);
+var chatModel = require('../models/chat.js');
+var channelModel = require('../models/channel');
 
 /**
- * Socket.io
- */
-io.on('connection', function (socket) {
-  console.log('User connected');
-  socket.on('disconnect', function() {
-    console.log('User disconnected');
-  });
-  socket.on('save-message', function (data) {
-    console.log(data);
-    io.emit('new-message', { message: data });
-  });
-});
-
-/**
- * Get all chats
+ * Get the last 10 chats
  */
 router.get('/:channel', function(req, res, next) {
-  Chat.find({ room: req.params.room }, function (err, chats) {
-    if (err) return next(err);
-    res.json(chats);
-  });
+
+  chatModel.find({ channel: req.params.channel })
+    .sort({ created_at: 1 })
+    .limit(10)
+    .populate({ path: 'user', select: 'nickname' })
+    .exec(function(err, doc) {
+      if(err) {
+        console.log(err);
+        res.send(err);
+        return;
+      }
+      res.send(doc);
+    });
 });
 
 /**
  * Save chat
  */
-router.post('/', function(req, res, next) {
-  Chat.create(req.body, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
+router.post('/new', function(req, res, next) {
+
+  chatModel.create(req.body, function (err, chat) {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    }
+
+    channelModel.findByIdAndUpdate(chat.channel, {$push: { chats: chat._id }}, { new: true }, function(err, doc) {
+      if(err) { 
+        console.log(err);
+        res.send(err);
+        return;
+      }
+      res.send(chat);
+    });
   });
 });
 

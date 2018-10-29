@@ -47,7 +47,7 @@ export class ChannelService {
     const token = this.authSvc.getToken();
     return this.http.get('/api/channels/' + channel, { headers: { Authorization: `Bearer ${token}` }}).pipe(map(
       (response) => {
-        console.log('Channel:', response);
+        // console.log('Channel:', response);
         return response;
       },
       (err) => {
@@ -65,7 +65,7 @@ export class ChannelService {
     const token = this.authSvc.getToken();
     return this.http.post('/api/channels/connect', channel, { headers: { Authorization: `Bearer ${token}` }}).pipe(map(
       (response) => {
-        console.log(response);
+        // console.log(response);
         return response;
       },
       (err) => {
@@ -83,7 +83,43 @@ export class ChannelService {
     const token = this.authSvc.getToken();
     return this.http.post('/api/channels/disconnect', channel, { headers: { Authorization: `Bearer ${token}` }}).pipe(map(
       (response) => {
-        console.log(response);
+        // console.log(response);
+        return response;
+      },
+      (err) => {
+        console.log('err', err);
+        return err;
+      }), catchError(
+        (err) => {
+          console.log('catch', err);
+          return throwError(err);
+        }));
+  }
+
+  getChatsByChannel(channel: String) {
+
+    const token = this.authSvc.getToken();
+    return this.http.get('/api/chats/' + channel, { headers: { Authorization: `Bearer ${token}` }}).pipe(map(
+      (response) => {
+        // console.log(response);
+        return response;
+      },
+      (err) => {
+        console.log('err', err);
+        return err;
+      }), catchError(
+        (err) => {
+          console.log('catch', err);
+          return throwError(err);
+        }));
+  }
+
+  saveChat(chat: any) {
+
+    const token = this.authSvc.getToken();
+    return this.http.post('/api/chats/new', chat, { headers: { Authorization: `Bearer ${token}` }}).pipe(map(
+      (response) => {
+        // console.log(response);
         return response;
       },
       (err) => {
