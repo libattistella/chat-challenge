@@ -1,7 +1,10 @@
 <div class="panel panel-default">
-  <div class="panel-heading">
+  <div class="panel-heading clearfix">
     <span class="glyphicon glyphicon-comment"></span> 
-    {{ channelName }}
+    <strong> {{ channel.name }}</strong>
+    <span class="pull-right">
+      <button type="button" class="btn btn-danger btn-sm" (click)="onDisconnect()">Disconnect</button>
+    </span>
   </div>
   <div #scrollChat class="panel-body">
     <ul class="chat">

@@ -5,6 +5,8 @@ import { AuthService } from '../../auth/auth.service';
 import { ChannelService } from '../channel.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { UserDetails } from 'src/app/auth/auth.model';
+import { Router } from '@angular/router';
+import { Channel } from '../channel.model';
 
 @Component({
   selector: 'app-chat',
@@ -14,8 +16,7 @@ import { UserDetails } from 'src/app/auth/auth.model';
 export class ChatComponent implements OnInit, AfterViewChecked {
 
   @Input() channelId: String;
-  @Input() channelName: String;
-  // @Input() chats: any[];
+  @Input() channel: Channel;
   private chats: Chat[] = [];
   @ViewChild('scrollChat') private chatScrollContainer: ElementRef;
   private reversed: Chat[] = [];
@@ -26,7 +27,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   private newChat: any;
 
   constructor(private authSvc: AuthService,
-              private channelSvc: ChannelService) { }
+              private channelSvc: ChannelService,
+              private router: Router) { }
 
   ngOnInit() {
     this.user = this.authSvc.getUserDetails();
@@ -87,6 +89,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         console.log(err);
       });
     }
+  }
+
+  onDisconnect() {
+    this.channelSvc.disconnectUserFromChannel(this.channel).subscribe((res) => {
+      // console.log(res);
+      this.router.navigate(['/channel']);
+    },
+    (err) => {
+      console.log(err);
+    });
   }
 
 }
