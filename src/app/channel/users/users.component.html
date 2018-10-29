@@ -1,3 +1,8 @@
-<p>
-  users works!
-</p>
+<div class="panel panel-default">
+  <div class="panel-heading clearfix">
+    <span class="glyphicon glyphicon-user"></span> 
+    <strong> Connected users:</strong>
+  </div>
+  <app-user-item *ngFor="let user of users"
+                  [user]="user"></app-user-item>
+</div>

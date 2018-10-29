@@ -1,8 +1,9 @@
-import { Channel } from '../channel.model';
+import { User } from '../users/user.model';
 
 export interface Chat {
-  channel: Channel;
-  nickname: String;
+  _id: String;
+  channel: String;
+  user: User;
   message: String;
-  updated_at: Date;
+  created_at: Date;
 }

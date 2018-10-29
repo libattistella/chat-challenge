@@ -50,7 +50,6 @@ var auth = jwt({
   userProperty: 'payload'
 });
 
-//app.use('/api/', indexRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/users', auth, usersRouter);
 app.use('/api/channels', auth, channelsRouter);
