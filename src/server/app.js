@@ -57,6 +57,8 @@ app.use('/api/users', auth, usersRouter);
 app.use('/api/channels', auth, channelsRouter);
 app.use('/api/chats', auth, chatsRouter);
 
+app.use(express.static('../../dist/chat-challenge'));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

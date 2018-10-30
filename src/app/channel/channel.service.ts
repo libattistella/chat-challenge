@@ -11,8 +11,6 @@ import { AuthService } from '../auth/auth.service';
 })
 export class ChannelService {
 
-  private channelsURL = 'http://localhost:3000/api/channels';
-
   private channels: Channel[];
 
   private channelsChanged = new Subject<Channel[]>();
