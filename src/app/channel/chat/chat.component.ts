@@ -62,6 +62,35 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       }
     }.bind(this));
 
+    this.socket.on('user-on', function(data) {
+      if (data.channel._id === this.channelId) {
+        const fakeChat: Chat = {
+          _id: 'fake',
+          channel: this.channelId,
+          user: data.user,
+          message: data.user.nickname + ' has joined the chat',
+          created_at: new Date()
+        };
+        this.chats.push(fakeChat);
+        console.log('User has connected', data.user);
+        this.scrollToBottom();
+      }
+    }.bind(this));
+
+    this.socket.on('user-off', function(data) {
+      if (data.channel._id === this.channelId) {
+        const fakeChat: Chat = {
+          _id: 'fake',
+          channel: this.channelId,
+          user: data.user,
+          message: data.user.nickname + ' has left the chat',
+          created_at: new Date()
+        };
+        this.chats.push(fakeChat);
+        console.log('User has disconnected', data.user);
+        this.scrollToBottom();
+      }
+    }.bind(this));
   }
 
   ngAfterViewChecked() {
@@ -100,7 +129,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   onDisconnect() {
     this.channelSvc.disconnectUserFromChannel(this.channel).subscribe((res) => {
       (<any>Object).assign(this.disconnectedChannel, res);
-      this.socket.emit('disconnect-user', this.disconnectedChannel);
+      this.socket.emit('disconnect-user', { channel: this.disconnectedChannel, user: this.user });
       console.log('disconnect-user', this.disconnectedChannel.connectedUsers);
       this.router.navigate(['/channel']);
     },

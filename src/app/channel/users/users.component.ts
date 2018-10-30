@@ -17,19 +17,19 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
 
-    this.socket.on('user-on', function(channel) {
-      console.log('user-on', channel);
-      if (channel._id === this.channelId) {
-        this.users = channel.connectedUsers;
+    this.socket.on('user-on', function(data) {
+      console.log('user-on', data);
+      if (data.channel._id === this.channelId) {
+        this.users = data.channel.connectedUsers;
         console.log('Added user', this.users);
         // this.scrollToBottom();
       }
     }.bind(this));
 
-    this.socket.on('user-off', function(channel) {
-      console.log('user-off', channel);
-      if (channel._id === this.channelId) {
-        this.users = channel.connectedUsers;
+    this.socket.on('user-off', function(data) {
+      console.log('user-off', data);
+      if (data.channel._id === this.channelId) {
+        this.users = data.channel.connectedUsers;
         console.log('Erased user', this.users);
         // this.scrollToBottom();
       }
