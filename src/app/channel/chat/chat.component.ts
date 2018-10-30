@@ -7,6 +7,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { UserDetails } from 'src/app/auth/auth.model';
 import { Router } from '@angular/router';
 import { Channel } from '../channel.model';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-chat',
@@ -25,6 +26,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   socket = io('http://localhost:3000');
 
   private newChat: any;
+  private disconnectedChannel: Channel = {
+    _id: '',
+    name: '',
+    connectedUsers: [],
+    chats: []
+  };
+  private usersTyping: any[] = [];
 
   constructor(private authSvc: AuthService,
               private channelSvc: ChannelService,
@@ -37,26 +45,81 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       'message': new FormControl('')
     });
 
-    this.channelSvc.getChatsByChannel(this.channelId).subscribe((chats) => {
-      (<any>Object).assign(this.reversed, chats);
-      (<any>Object).assign(this.chats, this.reversed.reverse());
-      console.log('Chats for this channel', this.chats);
-      this.scrollToBottom();
-    },
-    (err) => {
-      console.log(err);
-    });
-
-    this.socket.on('new-message', function(chat) {
-      if (chat.channel === this.channelId) {
-        this.chats.push(chat);
-        console.log('Chats for this channel onNewMessage', this.chats);
-        this.newChat = null;
-        this.scrollToBottom();
+    this.chatForm.controls['message'].valueChanges.subscribe(
+      (message) => {
+        if (message !== null) {
+          if (message !== '') {
+            this.socket.emit('user-start-typing', { channel: this.channelId, user: this.user });
+          } else {
+            this.socket.emit('user-stop-typing', { channel: this.channelId, user: this.user });
+          }
+        }
       }
-    }.bind(this));
+  );
 
-  }
+  this.channelSvc.getChatsByChannel(this.channelId).subscribe((chats) => {
+    (<any>Object).assign(this.reversed, chats);
+    (<any>Object).assign(this.chats, this.reversed.reverse());
+    this.scrollToBottom();
+  },
+  (err) => {
+    console.log(err);
+  });
+
+  this.socket.on('new-message', function(chat) {
+    if (chat.channel === this.channelId) {
+      this.chats.push(chat);
+      this.newChat = null;
+      this.scrollToBottom();
+    }
+  }.bind(this));
+
+  this.socket.on('user-on', function(data) {
+    if (data.channel._id === this.channelId) {
+      const fakeChat: Chat = {
+        _id: 'fake',
+        channel: this.channelId,
+        user: data.user,
+        message: data.user.nickname + ' has joined the chat',
+        created_at: new Date()
+      };
+      this.chats.push(fakeChat);
+      // console.log('User has connected', data.user);
+      this.scrollToBottom();
+    }
+  }.bind(this));
+
+  this.socket.on('user-off', function(data) {
+    if (data.channel._id === this.channelId) {
+      const fakeChat: Chat = {
+        _id: 'fake',
+        channel: this.channelId,
+        user: data.user,
+        message: data.user.nickname + ' has left the chat',
+        created_at: new Date()
+      };
+      this.chats.push(fakeChat);
+      // console.log('User has disconnected', data.user);
+      this.scrollToBottom();
+    }
+  }.bind(this));
+
+  this.socket.on('some-user-start-typing', function(data) {
+    if (data.channel === this.channelId) {
+      // console.log(data.user.nickname + ' start typing...');
+      if (this.user._id !== data.user._id) {
+        this.addUserTyping(this.usersTyping, data);
+      }
+    }
+  }.bind(this));
+
+  this.socket.on('some-user-stop-typing', function(data) {
+    if (data.channel === this.channelId) {
+      // console.log(data.user.nickname + ' stop typing...');
+      this.removeUserTyping(this.usersTyping, data);
+    }
+  }.bind(this));
+}
 
   ngAfterViewChecked() {
     this.scrollToBottom();
@@ -82,7 +145,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.chatForm = new FormGroup({
           'message': new FormControl('')
         });
-        console.log('save-message', res);
+        // console.log('save-message', res);
         this.socket.emit('save-message', res);
       },
       (err) => {
@@ -93,7 +156,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   onDisconnect() {
     this.channelSvc.disconnectUserFromChannel(this.channel).subscribe((res) => {
-      // console.log(res);
+      (<any>Object).assign(this.disconnectedChannel, res);
+      this.socket.emit('disconnect-user', { channel: this.disconnectedChannel, user: this.user });
+      // console.log('disconnect-user', this.disconnectedChannel.connectedUsers);
       this.router.navigate(['/channel']);
     },
     (err) => {
@@ -101,4 +166,19 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  private addUserTyping(array, obj) {
+
+    const index = array.findIndex( elem => elem.user._id === obj.user._id );
+    if (index === -1) {
+      array.push(obj);
+    }
+  }
+
+  private removeUserTyping(array, obj) {
+
+    const index = array.findIndex( elem => elem.user._id === obj.user._id );
+    if (index !== -1) {
+      array.splice(index, 1);
+    }
+  }
 }

@@ -7,6 +7,8 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var jwt = require('express-jwt');
 
+require('dotenv').config();
+
 require('./models/user');
 require('./config/passport');
 
@@ -23,7 +25,7 @@ const options = {
 };
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://admin123:admin123@ds139243.mlab.com:39243/chat-challenge', options)
+mongoose.connect(process.env.DB_URL, options)
   .then(() =>  console.log('connection successful'))
   .catch((err) => console.error(err));
 
@@ -46,7 +48,7 @@ app.use(function(req, res, next) {
 app.use(passport.initialize());
 
 var auth = jwt({
-  secret: 'chatchallenge',
+  secret: process.env.SECRET_KEY,
   userProperty: 'payload'
 });
 

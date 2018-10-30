@@ -41,8 +41,19 @@ io.on('connection', function (socket) {
     console.log('User disconnected from socket');
   });
   socket.on('save-message', function (data) {
-    //console.log(data);
     io.emit('new-message', data);
+  });
+  socket.on('connect-user', function (data) {
+    io.emit('user-on', data);
+  });
+  socket.on('disconnect-user', function (data) {
+    io.emit('user-off', data);
+  });
+  socket.on('user-start-typing', function (data) {
+    io.emit('some-user-start-typing', data);
+  });
+  socket.on('user-stop-typing', function (data) {
+    io.emit('some-user-stop-typing', data);
   });
 });
 

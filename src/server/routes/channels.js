@@ -41,13 +41,15 @@ router.post('/connect', function(req, res, next) {
       res.send(err);
       return;
     }
-    channelModel.findByIdAndUpdate(req.body._id, {$push: { connectedUsers: req.payload._id }}, { new: true }, function(err, doc) {
-      if(err) { 
-        console.log(err);
-        res.send(err);
-        return;
-      }
-      res.send(doc);
+    channelModel.findByIdAndUpdate(req.body._id, {$push: { connectedUsers: req.payload._id }}, { new: true })
+      .populate('connectedUsers')
+      .exec(function(err, doc) {
+        if(err) { 
+          console.log(err);
+          res.send(err);
+          return;
+        }
+        res.send(doc);
     });
   });
 });
@@ -60,13 +62,15 @@ router.post('/disconnect', function(req, res, next) {
       res.send(err);
       return;
     }
-    channelModel.findByIdAndUpdate(req.body._id, {$pull: { connectedUsers: req.payload._id }}, { new: true }, function(err, doc) {
-      if(err) { 
-        console.log(err);
-        res.send(err);
-        return;
-      }
-      res.send(doc);
+    channelModel.findByIdAndUpdate(req.body._id, {$pull: { connectedUsers: req.payload._id }}, { new: true })
+      .populate('connectedUsers')
+      .exec(function(err, doc) {
+        if(err) { 
+          console.log(err);
+          res.send(err);
+          return;
+        }
+        res.send(doc);
     });
   });
 });

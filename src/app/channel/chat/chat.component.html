@@ -9,7 +9,13 @@
   <div #scrollChat class="panel-body">
     <ul class="chat">
       <li *ngFor="let chat of chats">
-        <div class="left list-group-item list-group-item-success clearfix" *ngIf="chat?.user._id === user._id">
+        <div class="left list-group-item list-group-item-success clearfix" *ngIf="chat?.user._id === user._id && chat?._id !== 'fake'">
+          <span class="chat-img pull-left">	
+            <img src="https://st2.depositphotos.com/2703645/5669/v/950/depositphotos_56695985-stock-illustration-male-avatar.jpg" 
+                alt="User Avatar" 
+                class="img-responsive img-circle"
+                style="max-height: 50px; margin-right: 10px;" />	
+          </span>
           <div class="chat-body clearfix">
             <div class="header">
               <strong class="primary-font">{{ chat?.user.nickname }}</strong> 
@@ -20,8 +26,14 @@
             <p>{{ chat?.message }}</p>
           </div>
         </div>
-        <div class="right list-group-item list-group-item-info clearfix" *ngIf="chat?.user._id !== user._id">
+        <div class="right list-group-item list-group-item-info clearfix" *ngIf="chat?.user._id !== user._id && chat?._id !== 'fake'">
           <div class="chat-body clearfix">
+            <span class="chat-img pull-right">	
+              <img src="https://st2.depositphotos.com/2703645/5669/v/950/depositphotos_56695985-stock-illustration-male-avatar.jpg" 
+                  alt="User Avatar" 
+                  class="img-responsive img-circle"
+                  style="max-height: 50px; margin-left: 10px;" />	
+            </span>
             <div class="header">
               <small class="text-muted">
                 <span class="glyphicon glyphicon-time"></span>{{ chat?.created_at | date: 'medium' }}
@@ -31,10 +43,22 @@
             <p class="pull-right">{{ chat?.message }}</p>
           </div>
         </div>
+        <div class="right list-group-item list-group-item-warning clearfix text-center" *ngIf="chat?._id === 'fake'">
+          <div class="chat-body clearfix">
+            <div class="header">
+              <!-- <small class="text-muted">
+                <span class="glyphicon glyphicon-time"></span>{{ chat?.created_at | date: 'medium' }}
+              </small> -->
+              <!-- <strong class="pull-right primary-font">{{ chat?.user.nickname }}</strong> -->
+            </div>
+            <small class="text-muted">{{ chat?.message }}</small>
+          </div>
+        </div>
       </li>
     </ul>
   </div>
   <div class="panel-footer">
+    <small><p class="text-muted" *ngIf="usersTyping.length">{{ usersTyping[0].user.nickname }} is typing...</p></small>
     <form [formGroup]="chatForm" (ngSubmit)="sendMessage()">
       <div class="input-group form-group">
         <input id="btn-input" 

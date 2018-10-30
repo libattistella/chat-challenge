@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 var UserSchema = new mongoose.Schema({
   nickname: { type: String, unique: true, required: true },
