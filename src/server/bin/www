@@ -49,6 +49,12 @@ io.on('connection', function (socket) {
   socket.on('disconnect-user', function (data) {
     io.emit('user-off', data);
   });
+  socket.on('user-start-typing', function (data) {
+    io.emit('some-user-start-typing', data);
+  });
+  socket.on('user-stop-typing', function (data) {
+    io.emit('some-user-stop-typing', data);
+  });
 });
 
 /**
