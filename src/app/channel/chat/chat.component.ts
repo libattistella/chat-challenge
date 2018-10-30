@@ -25,6 +25,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   socket = io('http://localhost:3000');
 
   private newChat: any;
+  private disconnectedChannel: Channel = {
+    _id: '',
+    name: '',
+    connectedUsers: [],
+    chats: []
+  };
 
   constructor(private authSvc: AuthService,
               private channelSvc: ChannelService,
@@ -93,7 +99,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   onDisconnect() {
     this.channelSvc.disconnectUserFromChannel(this.channel).subscribe((res) => {
-      // console.log(res);
+      (<any>Object).assign(this.disconnectedChannel, res);
+      this.socket.emit('disconnect-user', this.disconnectedChannel);
+      console.log('disconnect-user', this.disconnectedChannel.connectedUsers);
       this.router.navigate(['/channel']);
     },
     (err) => {
