@@ -146,6 +146,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           'message': new FormControl('')
         });
         // console.log('save-message', res);
+        this.socket.emit('user-stop-typing', { channel: this.channelId, user: this.user });
         this.socket.emit('save-message', res);
       },
       (err) => {
