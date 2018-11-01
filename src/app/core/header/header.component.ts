@@ -20,7 +20,14 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogout() {
-    this.authSvc.logout();
+    this.authSvc.logout().subscribe(
+      (res) => {
+        this.router.navigate(['/']);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
 }

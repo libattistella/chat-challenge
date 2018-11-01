@@ -9,7 +9,7 @@
           <li><a [routerLink]="['/signin']">Sign In</a></li>
           <li><a [routerLink]="['/signup']">Sign Up</a></li>
         </ng-template>
-        <li><a (click)="onLogout()" [routerLink]="['/home']" *ngIf="isAuthenticated()">Logout</a></li>
+        <li><a style="cursor: pointer;" (click)="onLogout()" *ngIf="isAuthenticated()">Logout</a></li>
       </ul>
     </div>
   </div>

@@ -30,16 +30,8 @@ export class AuthService {
     return this.token;
   }
 
-  logout(): void {
-    this.disconnectUserFromEveryChannel().subscribe(
-      (res) => {
-        this.token = null;
-        window.localStorage.removeItem('chat-token');
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+  logout(): Observable<any> {
+    return this.disconnectUserFromEveryChannel();
   }
 
   getUserDetails(): UserDetails {
@@ -95,7 +87,8 @@ export class AuthService {
     const token = this.getToken();
     return this.http.get('/api/users/disconnect', { headers: { Authorization: `Bearer ${token}` }}).pipe(map(
       (response) => {
-        console.log('RES', response);
+        this.token = null;
+        window.localStorage.removeItem('chat-token');
         return response;
       },
       (err) => {
