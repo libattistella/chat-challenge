@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading clearfix">
+      <span class="glyphicon glyphicon-comment"></span> 
+      <strong> Please select a channel:</strong>
+    </div>
+    <app-channel-item *ngFor="let channel of channels, let i = index"
+                      [channelItem]="channel"
+                      [index]="i"></app-channel-item>
+  </div>
+</div>

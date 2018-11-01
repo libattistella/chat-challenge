@@ -1,0 +1,20 @@
+<div class="row text-center">
+  <div class="col-sm-4 col-sm-offset-4">
+    <form (submit)="onSignin()">
+      <div class="form-group text-left">
+        <label for="email">Nickname</label>
+        <input type="email" class="form-control" name="email" placeholder="Enter nickname" 
+                [(ngModel)]="credentials.nickname">
+      </div>
+      <div class="form-group text-left">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" placeholder="Password" 
+                [(ngModel)]="credentials.password">
+      </div>
+      <div *ngIf="incorrect">
+        <p class="error"><strong>Invalid nickname / password pair</strong></p>
+      </div>
+      <button type="submit" class="btn btn-primary">Sign In</button>
+    </form>
+  </div>
+</div>
