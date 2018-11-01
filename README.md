@@ -14,8 +14,6 @@ Run `npm install -g @angular/cli` to install Angular CLI globally if you don't h
 
 Navigate to the project folder and run `npm install` to install all dependencies.
 
-Navigate to `/src/server/` and run `npm install` to install all dependencies.
-
 #### Configuration
 
 At `/src/server/`, create a .env file for your enviroment variables. Look at .env.example
@@ -37,8 +35,6 @@ Download and install [Node.js](https://nodejs.org/en/download/)
 Run `npm install -g @angular/cli` to install Angular CLI globally if you don't have it installed yet.
 
 Navigate to the project folder and run `npm install` to install all dependencies.
-
-Navigate to `/src/server/` and run `npm install` to install all dependencies.
 
 #### Configuration
 
