@@ -100,4 +100,17 @@ export class AuthService {
           return throwError(err);
         }));
   }
+
+  disconnectUserFromEveryChannelSync() {
+    const token = this.getToken();
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+      window.localStorage.removeItem('chat-token');
+    };
+
+    xhr.open('GET', '/api/users/disconnect', false);
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+    xhr.send();
+  }
 }
