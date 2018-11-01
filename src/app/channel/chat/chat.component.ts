@@ -18,7 +18,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   @Input() channelId: String;
   @Input() channel: Channel;
-  private chats: Chat[] = [];
+  chats: Chat[] = [];
   @ViewChild('scrollChat') private chatScrollContainer: ElementRef;
   private reversed: Chat[] = [];
   private user: UserDetails;
@@ -32,7 +32,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     connectedUsers: [],
     chats: []
   };
-  private usersTyping: any[] = [];
+  usersTyping: any[] = [];
 
   constructor(private authSvc: AuthService,
               private channelSvc: ChannelService,
@@ -84,7 +84,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         created_at: new Date()
       };
       this.chats.push(fakeChat);
-      // console.log('User has connected', data.user);
       this.scrollToBottom();
     }
   }.bind(this));
@@ -99,14 +98,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         created_at: new Date()
       };
       this.chats.push(fakeChat);
-      // console.log('User has disconnected', data.user);
       this.scrollToBottom();
     }
   }.bind(this));
 
   this.socket.on('some-user-start-typing', function(data) {
     if (data.channel === this.channelId) {
-      // console.log(data.user.nickname + ' start typing...');
       if (this.user._id !== data.user._id) {
         this.addUserTyping(this.usersTyping, data);
       }
@@ -115,7 +112,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   this.socket.on('some-user-stop-typing', function(data) {
     if (data.channel === this.channelId) {
-      // console.log(data.user.nickname + ' stop typing...');
       this.removeUserTyping(this.usersTyping, data);
     }
   }.bind(this));
@@ -145,7 +141,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.chatForm = new FormGroup({
           'message': new FormControl('')
         });
-        // console.log('save-message', res);
         this.socket.emit('user-stop-typing', { channel: this.channelId, user: this.user });
         this.socket.emit('save-message', res);
       },
@@ -159,7 +154,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.channelSvc.disconnectUserFromChannel(this.channel).subscribe((res) => {
       (<any>Object).assign(this.disconnectedChannel, res);
       this.socket.emit('disconnect-user', { channel: this.disconnectedChannel, user: this.user });
-      // console.log('disconnect-user', this.disconnectedChannel.connectedUsers);
       this.router.navigate(['/channel']);
     },
     (err) => {

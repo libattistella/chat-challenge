@@ -12,8 +12,8 @@ import { Channel } from './channel.model';
 })
 export class ChannelComponent implements OnInit, OnDestroy {
 
-  private channelId: String;
-  private channel: Channel = {
+  channelId: String;
+  channel: Channel = {
     _id: '',
     name: '',
     connectedUsers: [],

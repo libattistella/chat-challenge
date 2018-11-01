@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class SignUpComponent implements OnInit {
 
-  private credentials: TokenPayload = {
+  credentials: TokenPayload = {
     nickname: '',
     password: ''
   };
