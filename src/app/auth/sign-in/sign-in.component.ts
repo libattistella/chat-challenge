@@ -15,6 +15,7 @@ export class SignInComponent implements OnInit {
     nickname: '',
     password: ''
   };
+  private incorrect: Boolean = false;
 
   constructor(private authSvc: AuthService,
               private router: Router) { }
@@ -26,6 +27,7 @@ export class SignInComponent implements OnInit {
     this.authSvc.login(this.credentials).subscribe(() => {
       this.router.navigate(['channel']);
     }, (err) => {
+      this.incorrect = true;
       console.error(err);
     });
   }

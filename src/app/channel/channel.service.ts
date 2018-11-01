@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
-import { Observable, Subject } from 'rxjs';
+import { Subject, throwError } from 'rxjs';
 import { Channel } from './channel.model';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';

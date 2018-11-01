@@ -11,6 +11,9 @@
         <input type="password" class="form-control" name="password" placeholder="Password" 
                 [(ngModel)]="credentials.password">
       </div>
+      <div *ngIf="incorrect">
+        <p class="error"><strong>Invalid nickname / password pair</strong></p>
+      </div>
       <button type="submit" class="btn btn-primary">Sign In</button>
     </form>
   </div>

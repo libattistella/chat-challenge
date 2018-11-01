@@ -1,12 +1,12 @@
 <a class="list-group-item list-group-item-success clearfix" *ngIf="user._id !== userDetails._id">
   <div class="pull-left">
-    <h5>{{ user.nickname }}</h5>
-    <p class="text-muted"><small>Last message: 00:00</small></p>
+    <small><strong>{{ user.nickname }}</strong></small>
+    <!-- <p class="text-muted"><small>Last message: 00:00</small></p> -->
   </div>
   <span class="pull-right">
     <img src="https://st2.depositphotos.com/2703645/5669/v/950/depositphotos_56695985-stock-illustration-male-avatar.jpg"
           alt="{{ user.nickname }}"
           class="img-responsive img-circle"
-          style="max-height: 50px;">
+          style="max-height: 25px;">
   </span>
 </a>

@@ -6,10 +6,10 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav navbar-right">
         <ng-template [ngIf]="!isAuthenticated()">
-          <li><a [routerLink]="['/signup']">Sign Up</a></li>
           <li><a [routerLink]="['/signin']">Sign In</a></li>
+          <li><a [routerLink]="['/signup']">Sign Up</a></li>
         </ng-template>
-        <li><a style="cursor: pointer;" (click)="onLogout()" routerLink="/" *ngIf="isAuthenticated()">Logout</a></li>
+        <li><a (click)="onLogout()" [routerLink]="['/home']" *ngIf="isAuthenticated()">Logout</a></li>
       </ul>
     </div>
   </div>

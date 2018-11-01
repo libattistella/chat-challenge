@@ -1,7 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChannelService } from './channel.service';
-import { Chat } from './chat/chat.model';
-import { User } from './users/user.model';
 import { PlatformLocation } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';

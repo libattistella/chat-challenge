@@ -3,6 +3,8 @@
     <span class="glyphicon glyphicon-user"></span> 
     <strong> Connected users:</strong>
   </div>
-  <app-user-item *ngFor="let user of users"
-                  [user]="user"></app-user-item>
+  <div #scrollChat class="panel-body">
+    <app-user-item *ngFor="let user of users"
+                   [user]="user"></app-user-item>
+  </div>
 </div>

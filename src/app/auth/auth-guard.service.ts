@@ -12,10 +12,10 @@ export class AuthGuardService implements CanActivate, CanLoad {
   constructor(private authSvc: AuthService) { }
 
   canLoad(route: Route): Observable<boolean>|Promise<boolean>|boolean {
-    return this.authSvc.isAuthenticated();
+    return this.authSvc.isLoggedIn();
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|Promise<boolean>|boolean {
-    return this.authSvc.isAuthenticated();
+    return this.authSvc.isLoggedIn();
   }
 }

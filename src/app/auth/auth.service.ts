@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { TokenResponse, TokenPayload, UserDetails } from './auth.model';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +14,9 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  public isAuthenticated(): boolean {
-    return this.token !== null;
-  }
+  // public isAuthenticated(): boolean {
+  //   return this.token !== null;
+  // }
 
   private saveToken(token: string): void {
     localStorage.setItem('chat-token', token);
@@ -31,9 +31,15 @@ export class AuthService {
   }
 
   logout(): void {
-    this.token = null;
-    window.localStorage.removeItem('chat-token');
-    // this.router.navigateByUrl('/');
+    this.disconnectUserFromEveryChannel().subscribe(
+      (res) => {
+        this.token = null;
+        window.localStorage.removeItem('chat-token');
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   getUserDetails(): UserDetails {
@@ -83,5 +89,22 @@ export class AuthService {
 
   login(user: TokenPayload): Observable<any> {
     return this.request('post', 'login', user);
+  }
+
+  disconnectUserFromEveryChannel() {
+    const token = this.getToken();
+    return this.http.get('/api/users/disconnect', { headers: { Authorization: `Bearer ${token}` }}).pipe(map(
+      (response) => {
+        console.log('RES', response);
+        return response;
+      },
+      (err) => {
+        console.log('err', err);
+        return err;
+      }), catchError(
+        (err) => {
+          console.log('catch', err);
+          return throwError(err);
+        }));
   }
 }
