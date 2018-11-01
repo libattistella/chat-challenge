@@ -11,11 +11,11 @@ import { TokenPayload } from '../auth.model';
 })
 export class SignInComponent implements OnInit {
 
-  private credentials: TokenPayload = {
+  credentials: TokenPayload = {
     nickname: '',
     password: ''
   };
-  private incorrect: Boolean = false;
+  incorrect: Boolean = false;
 
   constructor(private authSvc: AuthService,
               private router: Router) { }

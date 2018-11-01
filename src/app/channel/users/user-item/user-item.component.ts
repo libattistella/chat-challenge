@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class UserItemComponent implements OnInit {
 
   @Input() user: User;
-  private userDetails: UserDetails;
+  userDetails: UserDetails;
 
   constructor(private authSvc: AuthService) { }
 

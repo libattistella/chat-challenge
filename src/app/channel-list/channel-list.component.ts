@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 })
 export class ChannelListComponent implements OnInit, OnDestroy {
 
-  private channels: Channel[] = [];
+  channels: Channel[] = [];
   private channelsChanged: Subscription;
 
   constructor(private channelSvc: ChannelService) {}
@@ -24,7 +24,6 @@ export class ChannelListComponent implements OnInit, OnDestroy {
     });
 
     this.channelSvc.getChannels().subscribe((channels) => {
-      // this.channels = channels;
       (<any>Object).assign(this.channels, channels);
     },
     (err) => {
