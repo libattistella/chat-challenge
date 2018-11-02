@@ -40,6 +40,10 @@ Navigate to the project folder and run `npm install` to install all dependencies
 
 At `/src/server/`, create a .env file for your enviroment variables. Look at .env.example
 
+#### Build
+
+In the project root directory run `ng build --configuration=local` to set the local production environment.
+
 #### Execution
 
 In the project root directory run `npm start` to start the server.

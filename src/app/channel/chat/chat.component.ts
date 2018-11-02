@@ -8,6 +8,7 @@ import { UserDetails } from 'src/app/auth/auth.model';
 import { Router } from '@angular/router';
 import { Channel } from '../channel.model';
 import { element } from 'protractor';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-chat',
@@ -23,7 +24,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   private reversed: Chat[] = [];
   private user: UserDetails;
   chatForm: FormGroup;
-  socket = io('http://localhost:3000');
+  socket = io(environment.wsURL);
 
   private newChat: any;
   private disconnectedChannel: Channel = {

@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  wsURL: 'https://chat-challenge.herokuapp.com:3000'
 };
