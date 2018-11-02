@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import * as io from 'socket.io-client';
 import { UserDetails } from 'src/app/auth/auth.model';
 import { AuthService } from 'src/app/auth/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-channel-item',
@@ -22,7 +23,7 @@ export class ChannelItemComponent implements OnInit {
     connectedUsers: [],
     chats: []
   };
-  socket = io('http://localhost:3000');
+  socket = io(environment.wsURL);
 
   constructor(private router: Router,
               private route: ActivatedRoute,
