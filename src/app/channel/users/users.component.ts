@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from './user.model';
 import * as io from 'socket.io-client';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-users',
@@ -11,7 +12,7 @@ export class UsersComponent implements OnInit {
 
   @Input() users: User[];
   @Input() channelId: String;
-  socket = io('http://localhost:3000');
+  socket = io(environment.wsURL);
 
   constructor() { }
 
