@@ -3,15 +3,20 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json",
+    "start": "cd src/server && node ./bin/www",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "cd src/server && npm install"
+    "postinstall": "cd src/server && npm install && cd ../.. && ng build --prod"
+  },
+  "engines": {
+    "node": "10.11.0",
+    "npm": "6.1.0"
   },
   "private": true,
   "dependencies": {
+    "@angular/cli": "~6.2.5",
     "@angular/animations": "^6.1.10",
     "@angular/common": "^6.1.10",
     "@angular/compiler": "^6.1.10",
