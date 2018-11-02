@@ -20,7 +20,7 @@ At `/src/server/`, create a .env file for your enviroment variables. Look at .en
 
 #### Execution
 
-Run `ng serve` for run the dev server.
+Run `ng serve` for run the dev server. Use the `--port <PORT>` flag to select the port. Default port is 4200.
 
 Navigate to `/src/server/` and run `npm start` to start the server.
 
@@ -28,7 +28,7 @@ Open your browser and navigate to `http://localhost:4200/`. The app will automat
 
 ### Production enviroment
 
-#### Installation
+#### Installation and build
 
 Download and install [Node.js](https://nodejs.org/en/download/)
 
@@ -40,12 +40,8 @@ Navigate to the project folder and run `npm install` to install all dependencies
 
 At `/src/server/`, create a .env file for your enviroment variables. Look at .env.example
 
-#### Building
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
 #### Execution
 
-Navigate to `/src/server/` and run `npm start` to start the server.
+In the project root directory run `npm start` to start the server.
 
 Open your browser and navigate to `http://localhost:3000/`.
