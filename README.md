@@ -20,9 +20,9 @@ At `/src/server/`, create a .env file for your enviroment variables. Look at .en
 
 #### Execution
 
-Run `ng serve` for run the dev server. Use the `--port <PORT>` flag to select the port. Default port is 4200.
+In the project root directory run `npm start` to start the server.
 
-Navigate to `/src/server/` and run `npm start` to start the server.
+Then run `ng serve` for run the angular dev server. Use the `--port <PORT>` flag to select the port. Default port is 4200.
 
 Open your browser and navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
