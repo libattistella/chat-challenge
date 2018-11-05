@@ -16,7 +16,14 @@ Navigate to the project folder and run `npm install` to install all dependencies
 
 #### Configuration
 
-At `/src/server/`, create a .env file for your enviroment variables. Look at .env.example
+Create a MongoDB database to store the data.
+
+At `/src/server/`, create a .env file for your enviroment variables. Look at .env.example. 
+
+In this file you must define three variables.
+* The **secret** for the jwt authentication
+* The **PORT** where the server will be running
+* The **database URL**
 
 #### Execution
 
@@ -38,7 +45,14 @@ Navigate to the project folder and run `npm install` to install all dependencies
 
 #### Configuration
 
-At `/src/server/`, create a .env file for your enviroment variables. Look at .env.example
+Create a MongoDB database to store the data.
+
+At `/src/server/`, create a .env file for your enviroment variables. Look at .env.example.
+
+In this file you must define three variables.
+* The **secret** for the jwt authentication
+* The **PORT** where the server will be running
+* The **database URL**
 
 #### Build
 
